@@ -5,6 +5,7 @@ import DayModal from './components/DayModal'
 import EventModal from './components/EventModal'
 import GoalPanel from './components/GoalPanel'
 import MemoPanel from './components/MemoPanel'
+import StatsPanel from './components/StatsPanel'
 import './App.css'
 
 export default function App() {
@@ -74,6 +75,7 @@ export default function App() {
         />
         <div className="sidebar">
           <GoalPanel goals={goals} setGoals={setGoals} />
+          <StatsPanel events={events} />
           <MemoPanel />
         </div>
       </main>

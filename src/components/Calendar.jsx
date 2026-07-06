@@ -1,5 +1,5 @@
 import { CATEGORIES, categoryById } from '../categories'
-import { timeRangeLabel, toKey, todayKey } from '../utils'
+import { formatHours, freeHours, timeRangeLabel, toKey, todayKey } from '../utils'
 
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土']
 
@@ -27,21 +27,41 @@ export default function Calendar({ year, month, events, goals, onSelectDate, onS
             .filter((e) => e.date === key)
             .sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'))
           const dayGoals = goals.filter((g) => g.deadline === key && !g.done)
+          // 未達成の目標に属する未達成ステップで、この日が締切のもの
+          const daySteps = goals
+            .filter((g) => !g.done)
+            .flatMap((g) =>
+              (g.steps ?? [])
+                .filter((s) => !s.done && s.deadline === key)
+                .map((s) => ({ ...s, goalTitle: g.title })),
+            )
           const dow = date.getDay()
+          const isOtherMonth = date.getMonth() !== month
+          const free = freeHours(dayEvents)
           const classes = [
             'day-cell',
-            date.getMonth() !== month ? 'other-month' : '',
+            isOtherMonth ? 'other-month' : '',
             key === today ? 'today' : '',
           ].join(' ')
 
           return (
             <div key={key} className={classes} onClick={() => onSelectDate(key)}>
-              <div className={`day-number ${dow === 0 ? 'sun' : dow === 6 ? 'sat' : ''}`}>
-                {date.getDate()}
+              <div className="day-head">
+                <span className={`day-number ${dow === 0 ? 'sun' : dow === 6 ? 'sat' : ''}`}>
+                  {date.getDate()}
+                </span>
+                {!isOtherMonth && free > 0 && (
+                  <span className="free-badge">空き{formatHours(free)}</span>
+                )}
               </div>
               {dayGoals.map((g) => (
                 <div key={g.id} className="goal-chip" title={`目標: ${g.title}`}>
                   🎯 {g.title}
+                </div>
+              ))}
+              {daySteps.map((s) => (
+                <div key={s.id} className="step-chip" title={`「${s.goalTitle}」のステップ`}>
+                  ⚐ {s.title}
                 </div>
               ))}
               {dayEvents.map((ev) => {
