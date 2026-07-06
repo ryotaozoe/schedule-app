@@ -1,5 +1,5 @@
 import { CATEGORIES, categoryById } from '../categories'
-import { toKey, todayKey } from '../utils'
+import { timeRangeLabel, toKey, todayKey } from '../utils'
 
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土']
 
@@ -46,6 +46,7 @@ export default function Calendar({ year, month, events, goals, onSelectDate, onS
               ))}
               {dayEvents.map((ev) => {
                 const cat = categoryById(ev.category)
+                const timeLabel = timeRangeLabel(ev)
                 return (
                   <button
                     key={ev.id}
@@ -61,7 +62,7 @@ export default function Calendar({ year, month, events, goals, onSelectDate, onS
                       onSelectEvent(ev)
                     }}
                   >
-                    {ev.time && <span className="event-time">{ev.time}</span>}
+                    {timeLabel && <span className="event-time">{timeLabel}</span>}
                     {ev.title}
                   </button>
                 )

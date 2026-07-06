@@ -27,6 +27,14 @@ export function formatKey(key) {
   return `${m}月${d}日(${w})`
 }
 
+// 予定の時間帯を「18:00〜21:00」のような表示用文字列にする
+export function timeRangeLabel(ev) {
+  if (ev.time && ev.endTime) return `${ev.time}〜${ev.endTime}`
+  if (ev.time) return ev.time
+  if (ev.endTime) return `〜${ev.endTime}`
+  return ''
+}
+
 export function uid() {
   return crypto.randomUUID
     ? crypto.randomUUID()

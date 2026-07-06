@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import Calendar from './components/Calendar'
+import DayModal from './components/DayModal'
 import EventModal from './components/EventModal'
 import GoalPanel from './components/GoalPanel'
 import './App.css'
@@ -12,7 +13,9 @@ export default function App() {
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
   const [month, setMonth] = useState(now.getMonth()) // 0〜11
-  const [modal, setModal] = useState(null) // { dateKey, event? } または null
+  // { type: 'day', dateKey }（その日の予定一覧）
+  // { type: 'form', dateKey, event? }（予定の追加・編集フォーム）
+  const [modal, setModal] = useState(null)
 
   const moveMonth = (diff) => {
     const d = new Date(year, month + diff, 1)
@@ -32,12 +35,12 @@ export default function App() {
         ? prev.map((e) => (e.id === event.id ? event : e))
         : [...prev, event],
     )
-    setModal(null)
+    setModal({ type: 'day', dateKey: event.date })
   }
 
   const deleteEvent = (id) => {
     setEvents((prev) => prev.filter((e) => e.id !== id))
-    setModal(null)
+    setModal(modal ? { type: 'day', dateKey: modal.dateKey } : null)
   }
 
   return (
@@ -65,18 +68,28 @@ export default function App() {
           month={month}
           events={events}
           goals={goals}
-          onSelectDate={(dateKey) => setModal({ dateKey })}
-          onSelectEvent={(event) => setModal({ dateKey: event.date, event })}
+          onSelectDate={(dateKey) => setModal({ type: 'day', dateKey })}
+          onSelectEvent={(event) => setModal({ type: 'form', dateKey: event.date, event })}
         />
         <GoalPanel goals={goals} setGoals={setGoals} />
       </main>
-      {modal && (
+      {modal?.type === 'day' && (
+        <DayModal
+          dateKey={modal.dateKey}
+          events={events}
+          goals={goals}
+          onAddEvent={() => setModal({ type: 'form', dateKey: modal.dateKey })}
+          onSelectEvent={(event) => setModal({ type: 'form', dateKey: modal.dateKey, event })}
+          onClose={() => setModal(null)}
+        />
+      )}
+      {modal?.type === 'form' && (
         <EventModal
           dateKey={modal.dateKey}
           event={modal.event}
           onSave={saveEvent}
           onDelete={deleteEvent}
-          onClose={() => setModal(null)}
+          onClose={() => setModal({ type: 'day', dateKey: modal.dateKey })}
         />
       )}
     </div>

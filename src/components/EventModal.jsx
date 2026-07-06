@@ -1,11 +1,14 @@
 import { useState } from 'react'
-import { CATEGORIES } from '../categories'
+import { CATEGORIES, categoryById } from '../categories'
 import { formatKey, uid } from '../utils'
 
 export default function EventModal({ dateKey, event, onSave, onDelete, onClose }) {
   const [title, setTitle] = useState(event?.title ?? '')
-  const [category, setCategory] = useState(event?.category ?? CATEGORIES[0].id)
+  const [category, setCategory] = useState(() =>
+    event ? categoryById(event.category).id : CATEGORIES[0].id,
+  )
   const [time, setTime] = useState(event?.time ?? '')
+  const [endTime, setEndTime] = useState(event?.endTime ?? '')
   const [memo, setMemo] = useState(event?.memo ?? '')
 
   const submit = (e) => {
@@ -17,6 +20,7 @@ export default function EventModal({ dateKey, event, onSave, onDelete, onClose }
       title: title.trim(),
       category,
       time,
+      endTime,
       memo: memo.trim(),
     })
   }
@@ -58,10 +62,16 @@ export default function EventModal({ dateKey, event, onSave, onDelete, onClose }
               ))}
             </div>
           </fieldset>
-          <label className="field">
-            時間（任意）
-            <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
-          </label>
+          <div className="time-row">
+            <label className="field">
+              開始時間（任意）
+              <input type="time" value={time} onChange={(e) => setTime(e.target.value)} />
+            </label>
+            <label className="field">
+              終了時間（任意）
+              <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} />
+            </label>
+          </div>
           <label className="field">
             メモ（任意）
             <textarea rows={2} value={memo} onChange={(e) => setMemo(e.target.value)} />
