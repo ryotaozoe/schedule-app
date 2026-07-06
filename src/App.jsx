@@ -4,6 +4,7 @@ import Calendar from './components/Calendar'
 import DayModal from './components/DayModal'
 import EventModal from './components/EventModal'
 import GoalPanel from './components/GoalPanel'
+import MemoPanel from './components/MemoPanel'
 import './App.css'
 
 export default function App() {
@@ -71,7 +72,10 @@ export default function App() {
           onSelectDate={(dateKey) => setModal({ type: 'day', dateKey })}
           onSelectEvent={(event) => setModal({ type: 'form', dateKey: event.date, event })}
         />
-        <GoalPanel goals={goals} setGoals={setGoals} />
+        <div className="sidebar">
+          <GoalPanel goals={goals} setGoals={setGoals} />
+          <MemoPanel />
+        </div>
       </main>
       {modal?.type === 'day' && (
         <DayModal
