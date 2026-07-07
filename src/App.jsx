@@ -1,5 +1,9 @@
 import { useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { monthKey, uid } from './utils'
+import AiEventModal from './components/AiEventModal'
+import AiPlanModal from './components/AiPlanModal'
+import AiUsagePanel from './components/AiUsagePanel'
 import Calendar from './components/Calendar'
 import DayModal from './components/DayModal'
 import EventModal from './components/EventModal'
@@ -11,12 +15,15 @@ import './App.css'
 export default function App() {
   const [events, setEvents] = useLocalStorage('schedule-app:events', [])
   const [goals, setGoals] = useLocalStorage('schedule-app:goals', [])
+  // 月別のAI利用記録: { '2026-07': { count: 3, yen: 7.2 } }
+  const [aiUsage, setAiUsage] = useLocalStorage('schedule-app:ai-usage', {})
 
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
   const [month, setMonth] = useState(now.getMonth()) // 0〜11
   // { type: 'day', dateKey }（その日の予定一覧）
   // { type: 'form', dateKey, event? }（予定の追加・編集フォーム）
+  // { type: 'ai-events' }（AIで予定登録） / { type: 'ai-plan', goal }（AIでプラン提案）
   const [modal, setModal] = useState(null)
 
   const moveMonth = (diff) => {
@@ -45,11 +52,49 @@ export default function App() {
     setModal(modal ? { type: 'day', dateKey: modal.dateKey } : null)
   }
 
+  // AI呼び出し1回分のコストを今月の利用記録に足す
+  const recordAiUsage = (costYen) => {
+    setAiUsage((prev) => {
+      const key = monthKey()
+      const cur = prev[key] ?? { count: 0, yen: 0 }
+      return {
+        ...prev,
+        [key]: { count: cur.count + 1, yen: Math.round((cur.yen + costYen) * 100) / 100 },
+      }
+    })
+  }
+
+  // AIが解析した予定をまとめて登録し、最初の予定の月へ移動する
+  const addAiEvents = (newEvents) => {
+    setEvents((prev) => [...prev, ...newEvents.map((ev) => ({ ...ev, id: uid() }))])
+    if (newEvents.length > 0) {
+      const [y, m] = newEvents[0].date.split('-').map(Number)
+      setYear(y)
+      setMonth(m - 1)
+    }
+    setModal(null)
+  }
+
+  // AIが提案したステップを目標に追加する
+  const addAiSteps = (goalId, steps) => {
+    setGoals((prev) =>
+      prev.map((g) =>
+        g.id === goalId
+          ? { ...g, steps: [...(g.steps ?? []), ...steps.map((s) => ({ ...s, id: uid(), done: false }))] }
+          : g,
+      ),
+    )
+    setModal(null)
+  }
+
   return (
     <div className="app">
       <header className="app-header">
         <h1>📅 スケジュール管理</h1>
         <div className="month-nav">
+          <button className="ai-open-btn" onClick={() => setModal({ type: 'ai-events' })}>
+            ✨ AIで予定登録
+          </button>
           <button onClick={() => moveMonth(-1)} aria-label="前の月">
             ‹
           </button>
@@ -74,8 +119,13 @@ export default function App() {
           onSelectEvent={(event) => setModal({ type: 'form', dateKey: event.date, event })}
         />
         <div className="sidebar">
-          <GoalPanel goals={goals} setGoals={setGoals} />
+          <GoalPanel
+            goals={goals}
+            setGoals={setGoals}
+            onRequestPlan={(goal) => setModal({ type: 'ai-plan', goal })}
+          />
           <StatsPanel events={events} />
+          <AiUsagePanel usage={aiUsage} />
           <MemoPanel />
         </div>
       </main>
@@ -96,6 +146,21 @@ export default function App() {
           onSave={saveEvent}
           onDelete={deleteEvent}
           onClose={() => setModal({ type: 'day', dateKey: modal.dateKey })}
+        />
+      )}
+      {modal?.type === 'ai-events' && (
+        <AiEventModal
+          onAdd={addAiEvents}
+          onRecordUsage={recordAiUsage}
+          onClose={() => setModal(null)}
+        />
+      )}
+      {modal?.type === 'ai-plan' && (
+        <AiPlanModal
+          goal={modal.goal}
+          onAddSteps={addAiSteps}
+          onRecordUsage={recordAiUsage}
+          onClose={() => setModal(null)}
         />
       )}
     </div>

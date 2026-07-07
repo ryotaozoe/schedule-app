@@ -12,6 +12,11 @@ export function todayKey() {
   return toKey(new Date())
 }
 
+// 今月を表す 'YYYY-MM'（AI利用量の月別集計に使う）
+export function monthKey() {
+  return toKey(new Date()).slice(0, 7)
+}
+
 // 今日から指定日までの残り日数（過ぎていればマイナス）
 export function daysUntil(key) {
   const [y, m, d] = key.split('-').map(Number)

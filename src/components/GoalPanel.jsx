@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { daysUntil, formatKey, uid } from '../utils'
 
-export default function GoalPanel({ goals, setGoals }) {
+export default function GoalPanel({ goals, setGoals, onRequestPlan }) {
   const [title, setTitle] = useState('')
   const [deadline, setDeadline] = useState('')
   // ステップ追加フォームを開いている目標のID（nullなら閉じている）
@@ -182,9 +182,14 @@ export default function GoalPanel({ goals, setGoals }) {
                 </div>
               ) : (
                 !g.done && (
-                  <button className="step-add" onClick={() => openStepForm(g.id)}>
-                    ＋ ステップを追加
-                  </button>
+                  <div className="goal-actions">
+                    <button className="step-add" onClick={() => openStepForm(g.id)}>
+                      ＋ ステップを追加
+                    </button>
+                    <button className="step-add ai" onClick={() => onRequestPlan(g)}>
+                      ✨ AIでプラン提案
+                    </button>
+                  </div>
                 )
               )}
             </li>
