@@ -110,14 +110,17 @@ export default function App() {
         </div>
       </header>
       <main className="app-main">
-        <Calendar
-          year={year}
-          month={month}
-          events={events}
-          goals={goals}
-          onSelectDate={(dateKey) => setModal({ type: 'day', dateKey })}
-          onSelectEvent={(event) => setModal({ type: 'form', dateKey: event.date, event })}
-        />
+        <div className="main-col">
+          <Calendar
+            year={year}
+            month={month}
+            events={events}
+            goals={goals}
+            onSelectDate={(dateKey) => setModal({ type: 'day', dateKey })}
+            onSelectEvent={(event) => setModal({ type: 'form', dateKey: event.date, event })}
+          />
+          <MemoPanel />
+        </div>
         <div className="sidebar">
           <GoalPanel
             goals={goals}
@@ -126,7 +129,6 @@ export default function App() {
           />
           <StatsPanel events={events} />
           <AiUsagePanel usage={aiUsage} />
-          <MemoPanel />
         </div>
       </main>
       {modal?.type === 'day' && (
