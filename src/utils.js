@@ -100,8 +100,3 @@ export function freeSlots(dayEvents) {
   if (cursor < end) slots.push([cursor, end])
   return slots
 }
-
-// 空き時間の合計（時間単位）
-export function freeHours(dayEvents) {
-  return freeSlots(dayEvents).reduce((sum, [s, t]) => sum + (t - s), 0) / 60
-}

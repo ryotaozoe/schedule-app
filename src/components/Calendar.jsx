@@ -1,5 +1,5 @@
 import { CATEGORIES, categoryById } from '../categories'
-import { formatHours, freeHours, timeRangeLabel, toKey, todayKey } from '../utils'
+import { timeRangeLabel, toKey, todayKey } from '../utils'
 
 const WEEKDAYS = ['日', '月', '火', '水', '木', '金', '土']
 
@@ -36,23 +36,16 @@ export default function Calendar({ year, month, events, goals, onSelectDate, onS
                 .map((s) => ({ ...s, goalTitle: g.title })),
             )
           const dow = date.getDay()
-          const isOtherMonth = date.getMonth() !== month
-          const free = freeHours(dayEvents)
           const classes = [
             'day-cell',
-            isOtherMonth ? 'other-month' : '',
+            date.getMonth() !== month ? 'other-month' : '',
             key === today ? 'today' : '',
           ].join(' ')
 
           return (
             <div key={key} className={classes} onClick={() => onSelectDate(key)}>
-              <div className="day-head">
-                <span className={`day-number ${dow === 0 ? 'sun' : dow === 6 ? 'sat' : ''}`}>
-                  {date.getDate()}
-                </span>
-                {!isOtherMonth && free > 0 && (
-                  <span className="free-badge">空き{formatHours(free)}</span>
-                )}
+              <div className={`day-number ${dow === 0 ? 'sun' : dow === 6 ? 'sat' : ''}`}>
+                {date.getDate()}
               </div>
               {dayGoals.map((g) => (
                 <div key={g.id} className="goal-chip" title={`目標: ${g.title}`}>
