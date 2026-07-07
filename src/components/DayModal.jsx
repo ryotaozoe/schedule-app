@@ -73,7 +73,7 @@ export default function DayModal({
         </ul>
         {favorites.length > 0 && (
           <div className="favorite-section">
-            <h3>⭐ よく使う予定（タップでこの日に追加）</h3>
+            <h3 className="favorite-heading">よく使う予定（タップでこの日に追加）</h3>
             <div className="favorite-chips">
               {favorites.map((fav) => {
                 const cat = categoryById(fav.category)

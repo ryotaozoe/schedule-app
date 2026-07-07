@@ -94,7 +94,7 @@ export default function EventModal({ dateKey, event, onSave, onDelete, onSaveFav
             disabled={!title.trim() || favSaved}
             onClick={saveFavorite}
           >
-            {favSaved ? '⭐ よく使う予定に登録しました' : '⭐ よく使う予定に登録'}
+            {favSaved ? 'よく使う予定に登録しました' : 'よく使う予定に登録'}
           </button>
           <div className="modal-actions">
             {event && (
