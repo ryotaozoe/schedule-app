@@ -861,9 +861,36 @@
   margin: 0 0 8px;
 }
 
+.memo-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.memo-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.memo-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.memo-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
 .memo-area {
   width: 100%;
-  min-height: 320px;
+  min-height: 110px;
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 12px;
