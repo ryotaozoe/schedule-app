@@ -1,6 +1,7 @@
 // 予定のカテゴリ定義。ここに追加すれば選択肢と色分けが増える
 export const CATEGORIES = [
   { id: 'class', label: '授業・学校', color: '#2563eb' },
+  { id: 'study', label: '勉強', color: '#db2777' },
   { id: 'baito', label: 'バイト', color: '#d97706' },
   { id: 'side', label: '副業', color: '#7c3aed' },
   { id: 'job', label: '就活', color: '#dc2626' },

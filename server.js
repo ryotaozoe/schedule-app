@@ -76,7 +76,7 @@ function parseTextJson(response) {
 }
 
 const CATEGORY_GUIDE =
-  'class=授業・学校, baito=バイト, side=副業（Web制作・noteなど）, job=就活（説明会・面接・ES提出など）, private=プライベート, other=その他'
+  'class=授業・学校, study=勉強（資格・自習・課題・テスト対策など）, baito=バイト, side=副業（Web制作・noteなど）, job=就活（説明会・面接・ES提出など）, private=プライベート, other=その他'
 
 // ---------- 自然文 → 予定リスト ----------
 
@@ -92,7 +92,7 @@ const eventsSchema = {
           title: { type: 'string', description: '予定の短いタイトル' },
           category: {
             type: 'string',
-            enum: ['class', 'baito', 'side', 'job', 'private', 'other'],
+            enum: ['class', 'study', 'baito', 'side', 'job', 'private', 'other'],
           },
           time: { type: 'string', description: '開始時間 HH:MM（24時間表記）。不明なら空文字' },
           endTime: { type: 'string', description: '終了時間 HH:MM。不明なら空文字' },
