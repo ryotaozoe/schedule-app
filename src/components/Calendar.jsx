@@ -75,8 +75,8 @@ export default function Calendar({ year, month, events, goals, onSelectDate, onS
                       onSelectEvent(ev)
                     }}
                   >
-                    {timeLabel && <span className="event-time">{timeLabel}</span>}
                     {ev.title}
+                    {timeLabel && <span className="event-time">{timeLabel}</span>}
                   </button>
                 )
               })}
