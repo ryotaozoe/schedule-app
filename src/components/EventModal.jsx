@@ -1,8 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CATEGORIES, categoryById } from '../categories'
 import { formatKey, uid } from '../utils'
 
-export default function EventModal({ dateKey, event, onSave, onDelete, onClose }) {
+export default function EventModal({ dateKey, event, onSave, onDelete, onSaveFavorite, onClose }) {
   const [title, setTitle] = useState(event?.title ?? '')
   const [category, setCategory] = useState(() =>
     event ? categoryById(event.category).id : CATEGORIES[0].id,
@@ -10,6 +10,18 @@ export default function EventModal({ dateKey, event, onSave, onDelete, onClose }
   const [time, setTime] = useState(event?.time ?? '')
   const [endTime, setEndTime] = useState(event?.endTime ?? '')
   const [memo, setMemo] = useState(event?.memo ?? '')
+  const [favSaved, setFavSaved] = useState(false)
+
+  // 内容を変えたら「登録しました」表示をリセットする
+  useEffect(() => {
+    setFavSaved(false)
+  }, [title, category, time, endTime])
+
+  const saveFavorite = () => {
+    if (!title.trim()) return
+    onSaveFavorite({ title: title.trim(), category, time, endTime })
+    setFavSaved(true)
+  }
 
   const submit = (e) => {
     e.preventDefault()
@@ -76,6 +88,14 @@ export default function EventModal({ dateKey, event, onSave, onDelete, onClose }
             メモ（任意）
             <textarea rows={2} value={memo} onChange={(e) => setMemo(e.target.value)} />
           </label>
+          <button
+            type="button"
+            className="favorite-save"
+            disabled={!title.trim() || favSaved}
+            onClick={saveFavorite}
+          >
+            {favSaved ? '⭐ よく使う予定に登録しました' : '⭐ よく使う予定に登録'}
+          </button>
           <div className="modal-actions">
             {event && (
               <button type="button" className="danger" onClick={() => onDelete(event.id)}>

@@ -712,6 +712,84 @@
   margin: 10px 0 0;
 }
 
+/* ---------- よく使う予定 ---------- */
+
+.favorite-save {
+  align-self: flex-start;
+  border: 1px solid #fde68a;
+  background: #fffbeb;
+  color: #b45309;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.favorite-save:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.favorite-section {
+  border-top: 1px solid var(--border);
+  padding-top: 10px;
+  margin-bottom: 12px;
+}
+
+.favorite-section h3 {
+  font-size: 13px;
+  margin: 0 0 6px;
+  color: var(--text-sub);
+}
+
+.favorite-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.favorite-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1.5px solid;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.favorite-apply {
+  border: none;
+  background: none;
+  padding: 4px 6px 4px 12px;
+  font-size: 13px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.favorite-apply:hover {
+  background: #f8fafc;
+}
+
+.favorite-time {
+  font-weight: 400;
+  font-size: 11px;
+  color: var(--text-sub);
+  font-variant-numeric: tabular-nums;
+}
+
+.favorite-del {
+  border: none;
+  background: none;
+  color: var(--text-sub);
+  padding: 4px 8px 4px 4px;
+  font-size: 11px;
+}
+
+.favorite-del:hover {
+  color: var(--sun);
+}
+
 /* ---------- 空き時間 ---------- */
 
 .free-section {

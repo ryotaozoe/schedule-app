@@ -4,7 +4,17 @@ import { formatHours, formatKey, freeSlots, minToTime, timeRangeLabel } from '..
 
 // 日付をクリックしたときに出る「その日の予定一覧」モーダル。
 // ここから予定を何個でも追加でき、予定をクリックすると編集できる。
-export default function DayModal({ dateKey, events, goals, onAddEvent, onSelectEvent, onClose }) {
+export default function DayModal({
+  dateKey,
+  events,
+  goals,
+  favorites,
+  onApplyFavorite,
+  onDeleteFavorite,
+  onAddEvent,
+  onSelectEvent,
+  onClose,
+}) {
   const dayEvents = events
     .filter((e) => e.date === dateKey)
     .sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'))
@@ -61,6 +71,39 @@ export default function DayModal({ dateKey, events, goals, onAddEvent, onSelectE
             )
           })}
         </ul>
+        {favorites.length > 0 && (
+          <div className="favorite-section">
+            <h3>⭐ よく使う予定（タップでこの日に追加）</h3>
+            <div className="favorite-chips">
+              {favorites.map((fav) => {
+                const cat = categoryById(fav.category)
+                const timeLabel = timeRangeLabel(fav)
+                return (
+                  <span key={fav.id} className="favorite-chip" style={{ borderColor: cat.color }}>
+                    <button
+                      type="button"
+                      className="favorite-apply"
+                      style={{ color: cat.color }}
+                      onClick={() => onApplyFavorite(fav)}
+                      title="タップでこの日に追加"
+                    >
+                      {fav.title}
+                      {timeLabel && <span className="favorite-time">{timeLabel}</span>}
+                    </button>
+                    <button
+                      type="button"
+                      className="favorite-del"
+                      onClick={() => onDeleteFavorite(fav.id)}
+                      aria-label="よく使う予定から削除"
+                    >
+                      ✕
+                    </button>
+                  </span>
+                )
+              })}
+            </div>
+          </div>
+        )}
         <div className="free-section">
           <h3>
             🕐 空き時間（{ACTIVITY_START_HOUR}:00〜{ACTIVITY_END_HOUR}:00）

@@ -17,6 +17,8 @@ export default function App() {
   const [goals, setGoals] = useLocalStorage('schedule-app:goals', [])
   // 月別のAI利用記録: { '2026-07': { count: 3, yen: 7.2 } }
   const [aiUsage, setAiUsage] = useLocalStorage('schedule-app:ai-usage', {})
+  // よく使う予定のテンプレート: [{ id, title, category, time, endTime }]
+  const [favorites, setFavorites] = useLocalStorage('schedule-app:favorites', [])
 
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
@@ -50,6 +52,39 @@ export default function App() {
   const deleteEvent = (id) => {
     setEvents((prev) => prev.filter((e) => e.id !== id))
     setModal(modal ? { type: 'day', dateKey: modal.dateKey } : null)
+  }
+
+  // ---- よく使う予定（テンプレート） ----
+  // 予定フォームの内容を雛形として保存する。同じ内容があれば重複させない。
+  const saveFavorite = (template) => {
+    setFavorites((prev) => {
+      const dup = prev.some(
+        (f) =>
+          f.title === template.title &&
+          f.category === template.category &&
+          f.time === template.time &&
+          f.endTime === template.endTime,
+      )
+      return dup ? prev : [...prev, { ...template, id: uid() }]
+    })
+  }
+
+  const deleteFavorite = (id) => setFavorites((prev) => prev.filter((f) => f.id !== id))
+
+  // よく使う予定をその日にワンタップ登録（続けて足せるようモーダルは開いたまま）
+  const applyFavorite = (dateKey, fav) => {
+    setEvents((prev) => [
+      ...prev,
+      {
+        id: uid(),
+        date: dateKey,
+        title: fav.title,
+        category: fav.category,
+        time: fav.time,
+        endTime: fav.endTime,
+        memo: '',
+      },
+    ])
   }
 
   // AI呼び出し1回分のコストを今月の利用記録に足す
@@ -136,6 +171,9 @@ export default function App() {
           dateKey={modal.dateKey}
           events={events}
           goals={goals}
+          favorites={favorites}
+          onApplyFavorite={(fav) => applyFavorite(modal.dateKey, fav)}
+          onDeleteFavorite={deleteFavorite}
           onAddEvent={() => setModal({ type: 'form', dateKey: modal.dateKey })}
           onSelectEvent={(event) => setModal({ type: 'form', dateKey: modal.dateKey, event })}
           onClose={() => setModal(null)}
@@ -147,6 +185,7 @@ export default function App() {
           event={modal.event}
           onSave={saveEvent}
           onDelete={deleteEvent}
+          onSaveFavorite={saveFavorite}
           onClose={() => setModal({ type: 'day', dateKey: modal.dateKey })}
         />
       )}
