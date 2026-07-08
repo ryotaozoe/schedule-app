@@ -1,12 +1,26 @@
 :root {
-  --bg: #f1f5f9;
-  --surface: #ffffff;
-  --border: #e2e8f0;
-  --text: #1e293b;
-  --text-sub: #64748b;
-  --accent: #2563eb;
-  --sun: #dc2626;
-  --sat: #2563eb;
+  /* 落ち着いたダークテーマ。濃紺〜チャコール地に淡い差し色 */
+  color-scheme: dark;
+  --bg: #14161d;
+  --surface: #1e2230;
+  --surface-2: #262b3b;
+  --input-bg: #15171f;
+  --border: #2c3242;
+  --text: #e6e8ee;
+  --text-sub: #9aa0b0;
+  --accent: #8b9cf7;
+  --on-accent: #10131a;
+  --accent-bg: #232a3d;
+  --sun: #f0808a;
+  --sat: #7fb0f0;
+  /* 状態色（暗背景で映える淡い色＋低彩度の背景タイル） */
+  --amber: #e0a44e;
+  --amber-bg: #2b2416;
+  --green: #46c98a;
+  --green-bg: #16281f;
+  --blue-bg: #1b2740;
+  --red-bg: #2e1a1e;
+  --purple: #b48bfa;
 }
 
 * {
@@ -31,4 +45,11 @@ input,
 textarea,
 select {
   font: inherit;
+  background: var(--input-bg);
+  color: var(--text);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--text-sub);
 }

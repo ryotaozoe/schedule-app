@@ -29,6 +29,7 @@
 .month-nav button {
   border: 1px solid var(--border);
   background: var(--surface);
+  color: var(--text);
   border-radius: 8px;
   padding: 6px 12px;
   font-size: 16px;
@@ -36,7 +37,7 @@
 }
 
 .month-nav button:hover {
-  background: #eef2ff;
+  background: var(--surface-2);
 }
 
 .month-label {
@@ -53,13 +54,13 @@
 .ai-open-btn {
   font-size: 14px;
   font-weight: 600;
-  color: #7c3aed;
-  border-color: #ddd6fe !important;
-  background: #f5f3ff !important;
+  color: var(--purple);
+  border-color: #3a3457 !important;
+  background: #221d38 !important;
 }
 
 .ai-open-btn:hover {
-  background: #ede9fe !important;
+  background: #2a2444 !important;
 }
 
 /* ---------- レイアウト ---------- */
@@ -122,7 +123,7 @@
 }
 
 .day-cell:hover {
-  background: #f8fafc;
+  background: var(--surface-2);
 }
 
 .day-cell.other-month {
@@ -131,7 +132,7 @@
 
 .day-cell.today {
   border: 2px solid var(--accent);
-  background: #eff6ff;
+  background: var(--accent-bg);
 }
 
 .day-number {
@@ -172,8 +173,8 @@
 .goal-chip {
   font-size: 11px;
   font-weight: 700;
-  color: #b45309;
-  background: #fef3c7;
+  color: var(--amber);
+  background: var(--amber-bg);
   border-radius: 4px;
   padding: 2px 4px;
   white-space: nowrap;
@@ -184,9 +185,9 @@
 .step-chip {
   font-size: 11px;
   font-weight: 600;
-  color: #b45309;
-  background: #fffbeb;
-  border: 1px dashed #f59e0b;
+  color: var(--amber);
+  background: var(--amber-bg);
+  border: 1px dashed #5c4a24;
   border-radius: 4px;
   padding: 1px 4px;
   white-space: nowrap;
@@ -324,23 +325,23 @@
 }
 
 .goal-badge.later {
-  background: #dbeafe;
-  color: #1d4ed8;
+  background: var(--blue-bg);
+  color: #93b4f5;
 }
 
 .goal-badge.soon {
-  background: #fee2e2;
-  color: #b91c1c;
+  background: var(--red-bg);
+  color: var(--sun);
 }
 
 .goal-badge.overdue {
-  background: #7f1d1d;
-  color: #fff;
+  background: #5e1d20;
+  color: #ffc9cc;
 }
 
 .goal-badge.done {
-  background: #d1fae5;
-  color: #047857;
+  background: var(--green-bg);
+  color: var(--green);
 }
 
 .goal-delete {
@@ -367,8 +368,8 @@
 .step-progress {
   font-size: 11px;
   font-weight: 700;
-  color: #b45309;
-  background: #fef3c7;
+  color: var(--amber);
+  background: var(--amber-bg);
   border-radius: 999px;
   padding: 1px 8px;
 }
@@ -377,7 +378,7 @@
   list-style: none;
   margin: 8px 0 0;
   padding: 0 0 0 10px;
-  border-left: 2px solid #fde68a;
+  border-left: 2px solid #4d3f22;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -447,14 +448,15 @@
 .step-form .goal-form-row button {
   padding: 6px 10px;
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-2);
+  color: var(--text);
   border-radius: 8px;
 }
 
 .step-form .goal-form-row button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .goal-actions {
@@ -463,7 +465,7 @@
 }
 
 .step-add.ai {
-  color: #7c3aed;
+  color: var(--purple);
 }
 
 /* ---------- AI機能 ---------- */
@@ -485,8 +487,8 @@
 }
 
 .ai-error {
-  background: #fef2f2;
-  color: #b91c1c;
+  background: var(--red-bg);
+  color: #f0a0a4;
   border-radius: 8px;
   padding: 8px 10px;
   font-size: 13px;
@@ -569,7 +571,7 @@
 
 .ai-usage-bar {
   height: 10px;
-  background: #e2e8f0;
+  background: var(--border);
   border-radius: 999px;
   overflow: hidden;
   margin-bottom: 8px;
@@ -582,7 +584,7 @@
 }
 
 .ai-usage-fill.ok {
-  background: #10b981;
+  background: #34d399;
 }
 
 .ai-usage-fill.warn {
@@ -600,7 +602,7 @@
 }
 
 .ai-usage-note.over {
-  color: #b91c1c;
+  color: var(--sun);
   font-weight: 600;
 }
 
@@ -643,7 +645,7 @@
 
 .range-toggle button.active {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 .stats-period {
@@ -778,7 +780,7 @@
 }
 
 .favorite-apply:hover {
-  background: #f8fafc;
+  background: var(--surface-2);
 }
 
 .favorite-time {
@@ -823,8 +825,8 @@
 .free-slot {
   font-size: 12px;
   font-weight: 600;
-  color: #047857;
-  background: #ecfdf5;
+  color: var(--green);
+  background: var(--green-bg);
   border-radius: 999px;
   padding: 2px 10px;
 }
@@ -834,7 +836,7 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(15, 23, 42, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -844,6 +846,7 @@
 
 .modal {
   background: var(--surface);
+  border: 1px solid var(--border);
   border-radius: 12px;
   padding: 20px;
   width: 100%;
@@ -926,7 +929,7 @@
 
 .category-option.selected {
   background: var(--cat-color);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 /* ---------- メモパネル ---------- */
@@ -994,8 +997,8 @@
 /* ---------- 日別モーダル（その日の予定一覧） ---------- */
 
 .day-goal {
-  background: #fef3c7;
-  color: #b45309;
+  background: var(--amber-bg);
+  color: var(--amber);
   border-radius: 8px;
   padding: 6px 10px;
   font-size: 13px;
@@ -1004,9 +1007,9 @@
 }
 
 .day-step {
-  background: #fffbeb;
-  border: 1px dashed #f59e0b;
-  color: #b45309;
+  background: var(--amber-bg);
+  border: 1px dashed #5c4a24;
+  color: var(--amber);
   border-radius: 8px;
   padding: 6px 10px;
   font-size: 13px;
@@ -1036,7 +1039,8 @@
   border-left: 4px solid;
   border-radius: 8px;
   padding: 8px 10px;
-  background: var(--surface);
+  background: var(--surface-2);
+  color: var(--text);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -1044,7 +1048,7 @@
 }
 
 .day-event:hover {
-  background: #f8fafc;
+  background: #2e344699;
 }
 
 .day-event-time {
@@ -1084,14 +1088,15 @@
 
 .modal-actions button {
   border: 1px solid var(--border);
-  background: var(--surface);
+  background: var(--surface-2);
+  color: var(--text);
   border-radius: 8px;
   padding: 8px 16px;
 }
 
 button.primary {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
   border: 1px solid var(--accent);
   border-radius: 8px;
   padding: 8px 16px;
@@ -1100,7 +1105,7 @@ button.primary {
 .modal-actions button.primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
 }
 
 button.primary:disabled {
@@ -1110,5 +1115,5 @@ button.primary:disabled {
 
 .modal-actions button.danger {
   color: var(--sun);
-  border-color: #fecaca;
+  border-color: #5b2b2f;
 }
