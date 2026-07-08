@@ -9,6 +9,8 @@ import DayModal from './components/DayModal'
 import EventModal from './components/EventModal'
 import GoalPanel from './components/GoalPanel'
 import MemoPanel from './components/MemoPanel'
+import MoneyLock from './components/MoneyLock'
+import MoneyPage from './components/MoneyPage'
 import StatsPanel from './components/StatsPanel'
 import './App.css'
 
@@ -19,6 +21,10 @@ export default function App() {
   const [aiUsage, setAiUsage] = useLocalStorage('schedule-app:ai-usage', {})
   // よく使う予定のテンプレート: [{ id, title, category, time, endTime }]
   const [favorites, setFavorites] = useLocalStorage('schedule-app:favorites', [])
+
+  // 表示中のページと、お金ページのロック状態（セッション中のみ。再読み込みで再ロック）
+  const [view, setView] = useState('schedule')
+  const [moneyUnlocked, setMoneyUnlocked] = useState(false)
 
   const now = new Date()
   const [year, setYear] = useState(now.getFullYear())
@@ -122,11 +128,32 @@ export default function App() {
     setModal(null)
   }
 
+  // お金ページ（パスワードで保護）
+  if (view === 'money') {
+    return moneyUnlocked ? (
+      <MoneyPage
+        onExit={() => setView('schedule')}
+        onLock={() => {
+          setMoneyUnlocked(false)
+          setView('schedule')
+        }}
+      />
+    ) : (
+      <MoneyLock
+        onUnlock={() => setMoneyUnlocked(true)}
+        onCancel={() => setView('schedule')}
+      />
+    )
+  }
+
   return (
     <div className="app">
       <header className="app-header">
         <h1>📅 スケジュール管理</h1>
         <div className="month-nav">
+          <button className="money-open-btn" onClick={() => setView('money')}>
+            お金
+          </button>
           <button className="ai-open-btn" onClick={() => setModal({ type: 'ai-events' })}>
             ✨ AIで予定登録
           </button>

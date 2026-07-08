@@ -1,7 +1,7 @@
 // 予定のカテゴリ定義。ここに追加すれば選択肢と色分けが増える。
 // 色は暗い背景でも映える、少し明るめのトーンにしている。
 export const CATEGORIES = [
-  { id: 'class', label: '授業・学校', color: '#6ea8fe' },
+  { id: 'class', label: '学校', color: '#6ea8fe' },
   { id: 'study', label: '勉強', color: '#f472b6' },
   { id: 'baito', label: 'バイト', color: '#f0a94e' },
   { id: 'side', label: '副業', color: '#b48bfa' },

@@ -1,4 +1,4 @@
-import { ACTIVITY_END_HOUR, ACTIVITY_START_HOUR, DEFAULT_EVENT_HOURS } from './config'
+import { DEFAULT_EVENT_HOURS } from './config'
 
 // 日付を 'YYYY-MM-DD' 形式の文字列にする（ローカルタイムゾーン基準）
 export function toKey(date) {
@@ -54,11 +54,6 @@ export function timeToMin(t) {
   return h * 60 + m
 }
 
-// 1110 → '18:30'
-export function minToTime(min) {
-  return `${Math.floor(min / 60)}:${String(min % 60).padStart(2, '0')}`
-}
-
 // 11.5 → '11.5h'
 export function formatHours(h) {
   return `${Math.round(h * 10) / 10}h`
@@ -74,29 +69,3 @@ export function eventDurationHours(ev) {
   return DEFAULT_EVENT_HOURS
 }
 
-// その日の予定一覧から、活動時間内で予定が入っていない区間を求める。
-// 戻り値は [開始分, 終了分] の配列。開始のみの予定は DEFAULT_EVENT_HOURS ぶん埋まる扱い。
-// 時間未設定の予定は場所が決められないため空き時間の計算には含めない。
-export function freeSlots(dayEvents) {
-  const start = ACTIVITY_START_HOUR * 60
-  const end = ACTIVITY_END_HOUR * 60
-  const blocks = dayEvents
-    .filter((e) => e.time)
-    .map((e) => {
-      const s = timeToMin(e.time)
-      const hasEnd = e.endTime && timeToMin(e.endTime) > s
-      const t = hasEnd ? timeToMin(e.endTime) : s + DEFAULT_EVENT_HOURS * 60
-      return [Math.max(s, start), Math.min(t, end)]
-    })
-    .filter(([s, t]) => t > s)
-    .sort((a, b) => a[0] - b[0])
-
-  const slots = []
-  let cursor = start
-  for (const [s, t] of blocks) {
-    if (s > cursor) slots.push([cursor, s])
-    cursor = Math.max(cursor, t)
-  }
-  if (cursor < end) slots.push([cursor, end])
-  return slots
-}

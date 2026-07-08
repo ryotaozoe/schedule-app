@@ -1,6 +1,5 @@
 import { categoryById } from '../categories'
-import { ACTIVITY_END_HOUR, ACTIVITY_START_HOUR } from '../config'
-import { formatHours, formatKey, freeSlots, minToTime, timeRangeLabel } from '../utils'
+import { formatKey, timeRangeLabel } from '../utils'
 
 // 日付をクリックしたときに出る「その日の予定一覧」モーダル。
 // ここから予定を何個でも追加でき、予定をクリックすると編集できる。
@@ -26,7 +25,6 @@ export default function DayModal({
         .filter((s) => !s.done && s.deadline === dateKey)
         .map((s) => ({ ...s, goalTitle: g.title })),
     )
-  const slots = freeSlots(dayEvents)
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -104,22 +102,6 @@ export default function DayModal({
             </div>
           </div>
         )}
-        <div className="free-section">
-          <h3>
-            🕐 空き時間（{ACTIVITY_START_HOUR}:00〜{ACTIVITY_END_HOUR}:00）
-          </h3>
-          {slots.length === 0 ? (
-            <p className="day-empty">空き時間はありません</p>
-          ) : (
-            <div className="free-slot-list">
-              {slots.map(([s, t]) => (
-                <span key={s} className="free-slot">
-                  {minToTime(s)}〜{minToTime(t)}（{formatHours((t - s) / 60)}）
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
         <div className="modal-actions">
           <button type="button" onClick={onClose}>
             閉じる

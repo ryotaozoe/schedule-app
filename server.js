@@ -76,7 +76,7 @@ function parseTextJson(response) {
 }
 
 const CATEGORY_GUIDE =
-  'class=授業・学校, study=勉強（資格・自習・課題・テスト対策など）, baito=バイト, side=副業（Web制作・noteなど）, job=就活（説明会・面接・ES提出など）, private=プライベート, other=その他'
+  'class=学校, study=勉強（資格・自習・課題・テスト対策など）, baito=バイト, side=副業（Web制作・noteなど）, job=就活（説明会・面接・ES提出など）, private=プライベート, other=その他'
 
 // ---------- 自然文 → 予定リスト ----------
 

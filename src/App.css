@@ -802,35 +802,6 @@
   color: var(--sun);
 }
 
-/* ---------- 空き時間 ---------- */
-
-.free-section {
-  border-top: 1px solid var(--border);
-  padding-top: 10px;
-  margin-bottom: 12px;
-}
-
-.free-section h3 {
-  font-size: 13px;
-  margin: 0 0 6px;
-  color: var(--text-sub);
-}
-
-.free-slot-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.free-slot {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--green);
-  background: var(--green-bg);
-  border-radius: 999px;
-  padding: 2px 10px;
-}
-
 /* ---------- モーダル ---------- */
 
 .modal-backdrop {
@@ -1116,4 +1087,332 @@ button.primary:disabled {
 .modal-actions button.danger {
   color: var(--sun);
   border-color: #5b2b2f;
+}
+
+/* ---------- お金ページ ---------- */
+
+.money-open-btn {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--green);
+  border-color: #2a4a3a !important;
+  background: #14261e !important;
+}
+
+.money-open-btn:hover {
+  background: #193026 !important;
+}
+
+.money-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.back-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  background: var(--surface-2);
+}
+
+.lock-btn {
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-sub);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+}
+
+.lock-btn:hover {
+  background: var(--surface-2);
+}
+
+/* パスワードロック画面 */
+
+.lock-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.lock-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.lock-card h2 {
+  margin: 0 0 8px;
+  font-size: 20px;
+}
+
+.lock-hint {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin: 0 0 14px;
+  line-height: 1.6;
+}
+
+.lock-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.lock-card input {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+
+.lock-error {
+  color: var(--sun);
+  font-size: 13px;
+  margin: 0;
+}
+
+.lock-note {
+  font-size: 11px;
+  color: var(--text-sub);
+  margin: 2px 0 0;
+  line-height: 1.6;
+}
+
+.lock-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.lock-actions .spacer {
+  flex: 1;
+}
+
+.lock-actions button {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.lock-actions button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+/* お金カレンダーのチップ */
+
+.money-chip {
+  border-left: 3px solid;
+  border-radius: 4px;
+  padding: 1px 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  display: flex;
+  gap: 4px;
+  align-items: baseline;
+}
+
+.money-chip-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.money-chip-amount {
+  margin-left: auto;
+  font-variant-numeric: tabular-nums;
+  font-size: 10px;
+}
+
+.money-chip.income {
+  color: #46c98a;
+  background: #16281f;
+  border-left-color: #46c98a;
+}
+
+.money-chip.expense {
+  color: #f2777a;
+  background: #2e1a1e;
+  border-left-color: #f2777a;
+}
+
+/* お金 日別モーダル */
+
+.money-day-summary {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.money-in {
+  color: #46c98a;
+}
+
+.money-out {
+  color: #f2777a;
+}
+
+.money-day-amount {
+  margin-left: auto;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.money-add-in {
+  color: #46c98a !important;
+  border-color: #2a4a3a !important;
+  background: #14261e !important;
+}
+
+.money-add-out {
+  color: #f2777a !important;
+  border-color: #4a2a2e !important;
+  background: #261417 !important;
+}
+
+/* お金 入力フォーム */
+
+.money-type-toggle {
+  display: flex;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.money-type-toggle button {
+  flex: 1;
+  border: none;
+  background: var(--surface-2);
+  color: var(--text-sub);
+  padding: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.money-type-toggle button.active.income {
+  background: #16281f;
+  color: #46c98a;
+}
+
+.money-type-toggle button.active.expense {
+  background: #2e1a1e;
+  color: #f2777a;
+}
+
+/* お金 サマリー・目標パネル */
+
+.money-summary-panel,
+.money-goal-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.money-summary-panel h2,
+.money-goal-panel h2 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+
+.money-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.money-summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.money-summary-row strong {
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+}
+
+.money-summary-row.net {
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+  margin-top: 2px;
+}
+
+.money-goal-list {
+  list-style: none;
+  margin: 4px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.money-goal-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.money-goal-name {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.money-goal-pct {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-sub);
+  margin-left: auto;
+}
+
+.money-goal-pct.done {
+  color: #46c98a;
+}
+
+.money-goal-bar {
+  height: 8px;
+  background: var(--border);
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 6px 0 4px;
+}
+
+.money-goal-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+.money-goal-fill.done {
+  background: #46c98a;
+}
+
+.money-goal-meta {
+  font-size: 12px;
+  color: var(--text-sub);
+  font-variant-numeric: tabular-nums;
 }
