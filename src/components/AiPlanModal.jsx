@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { callAi } from '../api'
 import { AI_COST_HINT } from '../config'
 import { formatKey } from '../utils'
 
@@ -14,13 +15,7 @@ export default function AiPlanModal({ goal, onAddSteps, onRecordUsage, onClose }
     setLoading(true)
     setError('')
     try {
-      const res = await fetch('/api/plan-goal', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: goal.title, deadline: goal.deadline }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'AIの呼び出しに失敗しました。')
+      const data = await callAi('/api/plan-goal', { title: goal.title, deadline: goal.deadline })
       setProposal(data.steps.map((s) => ({ ...s, checked: true })))
       setLastUsage(data.usage)
       onRecordUsage(data.usage.costYen)

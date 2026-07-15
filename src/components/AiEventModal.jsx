@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { callAi } from '../api'
 import { categoryById } from '../categories'
 import { AI_COST_HINT } from '../config'
 import { formatKey, timeRangeLabel } from '../utils'
@@ -17,13 +18,7 @@ export default function AiEventModal({ onAdd, onRecordUsage, onClose }) {
     setLoading(true)
     setError('')
     try {
-      const res = await fetch('/api/parse-events', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text }),
-      })
-      const data = await res.json()
-      if (!res.ok) throw new Error(data.error ?? 'AIの呼び出しに失敗しました。')
+      const data = await callAi('/api/parse-events', { text })
       setProposal(data.events.map((ev) => ({ ...ev, checked: true })))
       setLastUsage(data.usage)
       onRecordUsage(data.usage.costYen)
