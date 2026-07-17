@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { autoPush, getCode, syncNow } from './sync'
 import { monthKey, uid } from './utils'
 import AiEventModal from './components/AiEventModal'
 import AiPlanModal from './components/AiPlanModal'
@@ -12,6 +13,7 @@ import MemoPanel from './components/MemoPanel'
 import MoneyLock from './components/MoneyLock'
 import MoneyPage from './components/MoneyPage'
 import StatsPanel from './components/StatsPanel'
+import SyncPanel from './components/SyncPanel'
 import './App.css'
 
 export default function App() {
@@ -33,6 +35,27 @@ export default function App() {
   // { type: 'form', dateKey, event? }（予定の追加・編集フォーム）
   // { type: 'ai-events' }（AIで予定登録） / { type: 'ai-plan', goal }（AIでプラン提案）
   const [modal, setModal] = useState(null)
+
+  // クラウド同期: 起動時に取り込み → 変更を定期的にアップロード →
+  // アプリに戻ってきたとき（可視化）に再同期する
+  useEffect(() => {
+    let interval
+    let cancelled = false
+    ;(async () => {
+      if (getCode()) await syncNow() // 取り込みが必要なら内部で再読み込みされる
+      if (cancelled) return
+      interval = setInterval(() => autoPush(), 5000)
+    })()
+    const onVisible = () => {
+      if (document.visibilityState === 'visible' && getCode()) syncNow()
+    }
+    document.addEventListener('visibilitychange', onVisible)
+    return () => {
+      cancelled = true
+      clearInterval(interval)
+      document.removeEventListener('visibilitychange', onVisible)
+    }
+  }, [])
 
   const moveMonth = (diff) => {
     const d = new Date(year, month + diff, 1)
@@ -191,6 +214,7 @@ export default function App() {
           />
           <StatsPanel events={events} />
           <AiUsagePanel usage={aiUsage} />
+          <SyncPanel />
         </div>
       </main>
       {modal?.type === 'day' && (
