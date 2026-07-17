@@ -1416,3 +1416,85 @@ button.primary:disabled {
   color: var(--text-sub);
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- スマホ表示（狭い画面）の最適化 ---------- */
+
+@media (max-width: 600px) {
+  .app {
+    padding: 10px;
+  }
+
+  /* ヘッダー: タイトルを上、操作ボタンは下に折り返して並べる */
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .app-header h1 {
+    font-size: 18px;
+  }
+
+  .month-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  /* ボタン内の文字が縦に潰れないよう1行に固定 */
+  .month-nav button,
+  .ai-open-btn,
+  .money-open-btn,
+  .back-btn {
+    white-space: nowrap;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+
+  .month-label {
+    font-size: 15px;
+    min-width: 84px;
+  }
+
+  .money-title {
+    justify-content: center;
+  }
+
+  /* カレンダー: マスの縦長を解消して詰める */
+  .calendar {
+    padding: 8px;
+  }
+
+  .calendar-grid {
+    gap: 3px;
+  }
+
+  .day-cell {
+    min-height: 58px;
+    padding: 3px;
+  }
+
+  .day-number {
+    font-size: 11px;
+  }
+
+  .weekday {
+    font-size: 11px;
+  }
+
+  .event-chip,
+  .money-chip,
+  .goal-chip,
+  .step-chip {
+    font-size: 10px;
+  }
+
+  .money-chip-amount {
+    font-size: 9px;
+  }
+
+  /* モーダルの余白を少し詰める */
+  .modal {
+    padding: 16px;
+  }
+}
