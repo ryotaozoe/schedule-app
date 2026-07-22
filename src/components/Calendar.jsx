@@ -80,6 +80,19 @@ export default function Calendar({ year, month, events, goals, onSelectDate, onS
                   </button>
                 )
               })}
+              {/* スマホ用: 予定を色ドットだけで表示（日付タップで中身を見る） */}
+              <div className="day-dots">
+                {(dayGoals.length > 0 || daySteps.length > 0) && (
+                  <span className="day-dot goal" />
+                )}
+                {dayEvents.map((ev) => (
+                  <span
+                    key={ev.id}
+                    className="day-dot"
+                    style={{ background: categoryById(ev.category).color }}
+                  />
+                ))}
+              </div>
             </div>
           )
         })}

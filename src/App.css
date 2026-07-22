@@ -1482,11 +1482,41 @@ button.primary:disabled {
   line-height: 1.6;
 }
 
+/* PCではドット列は隠す（チップを表示） */
+.day-dots {
+  display: none;
+}
+
 /* ---------- スマホ表示（狭い画面）の最適化 ---------- */
 
 @media (max-width: 600px) {
   .app {
     padding: 10px;
+  }
+
+  /* スマホ: 予定の文字チップは隠し、色ドットだけ表示 */
+  .day-cell .event-chip,
+  .day-cell .goal-chip,
+  .day-cell .step-chip {
+    display: none;
+  }
+
+  .day-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 2px;
+  }
+
+  .day-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .day-dot.goal {
+    background: var(--amber);
   }
 
   /* ヘッダー: タイトルを上、操作ボタンは下に折り返して並べる */
